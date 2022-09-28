@@ -2,22 +2,35 @@ public with sharing class ContactManager {
     public ContactManager() {
     }
 
-        //метод создания Contact
-    public static Contact  createContact(String name ,Boolean insertInDB) {
-        Contact myContact = new Contact(Contact.Name = name );
-        if (!insertBD) {
-            return myContact;
-        }
-       else {
+        
+    public class ContactWrapper{
+        public String firstName {get; set;}
+        public String lastName {get; set;}
+        public String phone {get; set;}
+        public String email {get; set;}
+        public Id recordTypeId {get; set;}
+    }
 
-       } 
-            
+
+    public static Contact createContact (ContactWrapper wrapper, Boolean serialize) {
+
+        Contact createdContact = new Contact();
+        createdContact.FirstName = wrapper.firstName;
+        createdContact.LastName = wrapper.lastName;
+        createdContact.Phone = wrapper.phone;
+        createdContact.Email = wrapper.email;
+        createdContact.RecordTypeId = wrapper.recordTypeId;
+
+            if(serialize) {
+                insert createdContact;
+            }
+            return createdContact;
     }
 
 
 
-    //метод обновления сделки
-    public static updateDeal (){
+    
+    public static updateContact (){
 
 
     }
@@ -25,10 +38,10 @@ public with sharing class ContactManager {
 
 
 
-    //метод получения сделок по какому то значению 
-    public static List <Deal__c> getDeal__c (Integer num){
+    
+    public static List <Contact> getContact (Integer num){
 
-        List <Dael_cc> myList = new List <Deal__c>(num);
+        List <Contact> myList = new List <Contact>(num);
         return myList;
     }
 
